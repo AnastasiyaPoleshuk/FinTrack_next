@@ -1,0 +1,13 @@
+.logIn,
+.signUp {
+  border: 1px solid var(--ant-color-primary);
+  border-radius: var(--ant-border-radius);
+  line-height: normal;
+  padding: var(--ant-padding-sm);
+  color: var(--font-color);
+  font-size: 16px;
+}
+
+.logIn {
+  background: var(--ant-color-primary);
+}
