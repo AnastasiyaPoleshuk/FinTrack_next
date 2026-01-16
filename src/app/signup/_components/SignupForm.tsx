@@ -1,20 +1,27 @@
 "use client";
 
-import { Button, Form, FormProps, Input } from "antd";
+import { useCallback } from "react";
+import { Button, Form, Input } from "antd";
+import { useRouter } from "next/navigation";
 
-import { appConfig } from "@/src/config/appConfig";
+import { appConfig } from "@config/appConfig";
+import { createUser } from "../actions/createUser";
+import { SignupFormFieldType, CreateUserResponse } from "./type";
 import styles from "./SignupForm.module.scss";
 
-type FieldType = {
-  confirmedPassword?: string;
-  email?: string;
-  password?: string;
-};
-
 export const SignupForm = () => {
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
-  };
+  const router = useRouter();
+
+  const onFinish = useCallback(
+    async (values: SignupFormFieldType) => {
+      const result = (await createUser(values)) as CreateUserResponse;
+
+      if (result && result.id) {
+        router.push("/");
+      }
+    },
+    [router]
+  );
 
   return (
     <Form
@@ -23,7 +30,7 @@ export const SignupForm = () => {
       size={"large"}
       onFinish={onFinish}
     >
-      <Form.Item<FieldType>
+      <Form.Item
         label="Email"
         name="email"
         rules={[appConfig.commonFieldRules]}
@@ -31,7 +38,7 @@ export const SignupForm = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item<FieldType>
+      <Form.Item
         label="Password"
         name="password"
         rules={[appConfig.commonFieldRules]}
@@ -39,7 +46,7 @@ export const SignupForm = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item<FieldType>
+      <Form.Item
         label="Confirm password"
         name="confirmedPassword"
         dependencies={["password"]}
@@ -61,7 +68,7 @@ export const SignupForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" className="w-full">
+        <Button type="primary" className="w-full" htmlType={"submit"}>
           Sign up
         </Button>
       </Form.Item>
