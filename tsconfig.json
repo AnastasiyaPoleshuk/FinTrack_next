@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@app/*": ["./app/*"],
+      "@prisma/*": ["./prisma/*"],
       "@components/*": ["./src/components/*"],
       "@config/*": ["./src/config/*"],
       "@providers/*": ["./src/providers/*"]
